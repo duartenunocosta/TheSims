@@ -6,12 +6,8 @@ import mindera.mindswap.sims.SimsCharacter;
 
 public abstract class Room implements RoomHandler {
     private int maxCleannessLevel;
-    private int cleannessLevel;
+    protected int cleannessLevel;
     private boolean available;
-
-    public Room() {
-
-    }
 
     public Room(int maxCleannessLevel) {
         this.maxCleannessLevel = 100;
@@ -42,12 +38,25 @@ public abstract class Room implements RoomHandler {
         }
     }
 
-        protected void reduceRoomCleanness(int dirtyLevel){
-            cleannessLevel -= dirtyLevel;
+    protected void reduceRoomCleanness(int dirtyLevel) throws YouNeedToBuyAHouse {
+        cleannessLevel -= dirtyLevel;
+        if (cleannessLevel < 0) {
+            cleannessLevel = 0;
         }
+        reduceHouseCleanness(dirtyLevel);
+    }
 
-        protected int getRoomCleannessLevel() {
+    protected abstract void reduceHouseCleanness(int dirtyLevel) throws YouNeedToBuyAHouse;
+
+    protected int getRoomCleannessLevel() {
             return cleannessLevel;
         }
 
+    public void setCleannessLevel(int cleannessLevel) {
+        this.cleannessLevel = maxCleannessLevel;
+    }
+
+    public int getMaxCleannessLevel(){
+        return maxCleannessLevel;
+    }
 }

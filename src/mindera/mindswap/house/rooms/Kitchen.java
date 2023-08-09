@@ -6,6 +6,9 @@ import mindera.mindswap.house.Room;
 import mindera.mindswap.sims.SimsCharacter;
 
 public class Kitchen extends Room {
+    public Kitchen( int cleannessLevel) {
+        super(cleannessLevel);
+    }
     @Override
     public void start(SimsCharacter simsCharacter) {
         try {
@@ -30,5 +33,11 @@ public class Kitchen extends Room {
             throw new RuntimeException(e);
         }
     }
-}
+
+    @Override
+    protected void reduceHouseCleanness(int dirtyLevel) throws YouNeedToBuyAHouse {
+            SimsCharacter.getHouse().reduceHouseCleanness(dirtyLevel);
+        }
+    }
+
 
